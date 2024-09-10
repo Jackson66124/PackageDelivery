@@ -1,10 +1,8 @@
 
-from collections import defaultdict
-
 class HashMap:
-    def __init__(self, initial_capacity=20):
-        self.table = defaultdict(list)
-        self.capacity = initial_capacity
+    def __init__(self, capacity=20):
+        self.capacity = capacity
+        self.table = [[] for _ in range(self.capacity)]
 
     def insert(self, key, item):
         bucket = hash(key) % self.capacity
