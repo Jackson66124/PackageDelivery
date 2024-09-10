@@ -45,7 +45,6 @@ def deliver_packages(truck, package_hash_table, distances, addresses):
         
         package.delivery_time = truck.time
         package.departure_time = truck.depart
-        package.status = "Delivered"
         
         not_delivered.remove(package)
         current_address_index = get_address(package.address, addresses)
@@ -108,6 +107,7 @@ def main():
             for package_id in range(1, 41):
                 package = package_hash_table.lookup(package_id)
                 if package:
+                    package.set_status(time)
                     print(package)
                 else:
                     print(f"Package ID {package_id} not found.")

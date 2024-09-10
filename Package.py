@@ -13,9 +13,9 @@ class Package:
         self.delivery_time = None
 
     def set_status(self, current_time):
-        if self.delivery_time and current_time >= self.delivery_time:
+        if self.delivery_time and current_time > self.delivery_time:
             self.status = "Delivered"
-        elif self.departure_time and current_time >= self.departure_time:
+        elif self.departure_time and current_time > self.departure_time:
             self.status = "En route"
         else:
             self.status = "At Hub"
