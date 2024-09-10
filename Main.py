@@ -40,20 +40,22 @@ def load_addresses(filename):
     return addresses
 
 def assign_packages_to_trucks(packages, trucks):
-    all_packages = packages.all_packages()
-    for package in all_packages:
+    priority_packages = [pkg for pkg in packages.all_packages() if pkg.deadline != "EOD"]
+    regular_packages = [pkg for pkg in packages.all_packages() if pkg.deadline == "EOD"]
+
+    # Prioritize deadlines first
+    for package in priority_packages:
         if "Can only be on truck 2" in package.special_notes:
             trucks[1].load(package)
-        elif "Delayed" in package.special_notes:
-            trucks[1].load(package)
-        elif package.deadline != "EOD":
+        else:
+            trucks[0].load(package)
+    
+    # Assign the rest based on fewer packages
+    for package in regular_packages:
+        if len(trucks[0].packages) <= len(trucks[1].packages):
             trucks[0].load(package)
         else:
-            # Assign to the truck with fewer packages
-            if len(trucks[0].packages) <= len(trucks[1].packages):
-                trucks[0].load(package)
-            else:
-                trucks[1].load(package)
+            trucks[1].load(package)
 
 def optimize_route(truck, distances, addresses):
     undelivered = truck.packages.copy()
