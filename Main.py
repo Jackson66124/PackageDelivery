@@ -88,7 +88,7 @@ def main():
     
     #Deliver packages for each truck
     for truck in trucks:
-        deliver_packages(truck, hash_table, distance, address)
+        deliver_packages(truck, hash_table, address, distance)
     
     total_mileage = sum(truck.mileage for truck in trucks)
     print("WGUPS")
