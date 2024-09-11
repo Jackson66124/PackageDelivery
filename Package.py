@@ -1,5 +1,6 @@
 
 class Package:
+    #Create package attributes
     def __init__(self, ID, address, city, state, zip, deadline, weight, status):
         self.ID = ID
         self.address = address
@@ -12,6 +13,7 @@ class Package:
         self.departure_time = None
         self.delivery_time = None
 
+    #Set Package status
     def set_status(self, current_time):
         if self.delivery_time and current_time > self.delivery_time:
             self.status = "Delivered"
