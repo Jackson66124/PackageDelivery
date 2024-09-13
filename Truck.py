@@ -1,6 +1,7 @@
 class Truck:
     #Create truck attributes
-    def __init__(self, load, packages, mileage, address, depart):
+    def __init__(self, number, load, packages, mileage, address, depart):
+        self.number = number
         self.capacity = 16
         self.speed = 18
         self.load = load

@@ -1,7 +1,7 @@
 
 class Package:
     #Create package attributes
-    def __init__(self, ID, address, city, state, zip, deadline, weight, status):
+    def __init__(self, ID, address, city, state, zip, deadline, weight, status, truckNumber = 0):
         self.ID = ID
         self.address = address
         self.city = city
@@ -10,6 +10,7 @@ class Package:
         self.deadline = deadline
         self.weight = weight
         self.status = status
+        self.truckNumber = truckNumber
         self.departure_time = None
         self.delivery_time = None
 
@@ -23,4 +24,4 @@ class Package:
             self.status = "At Hub"
 
     def __str__(self):
-        return f"{self.ID}, {self.address}, {self.city}, {self.state}, {self.zip}, {self.deadline}, {self.weight}, {self.delivery_time}, {self.status}"
+        return f"{self.ID}, {self.address}, {self.city}, {self.state}, {self.zip}, {self.deadline}, {self.weight}, {self.delivery_time}, {self.status}, On Truck: {self.truckNumber}"

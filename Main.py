@@ -33,6 +33,12 @@ def load_package(filename, hash_table):
 
 #Main function for delivering packages using nearest neighbor
 def deliver_packages(truck, hash_table, addresses, distances):
+
+    if truck.number == 3:
+        package_9 = hash_table.lookup(9)
+        package_9.address = '410 S State St'
+        package_9.zip = '84111'
+
     #Retrieve package objects from truck package ids
     not_delivered = [hash_table.lookup(pID) for pID in truck.packages]
     truck.packages.clear()
@@ -46,9 +52,11 @@ def deliver_packages(truck, hash_table, addresses, distances):
             (distance_between(current_address, get_address(package.address, addresses), distances), package)
             for package in not_delivered
         ]
-        
+
         #Find shortest distance package
         distance, package = min(package_distances, key=lambda x: x[0])
+
+        package.truckNumber = truck.number
         
         truck.packages.append(package.ID)
         truck.mileage += distance
@@ -81,9 +89,9 @@ def main():
     
     #Manually load trucks
     trucks = [
-        Truck(None, [30, 13, 37, 16, 40, 1, 15, 34, 20, 31, 29, 14], 0.0, "4001 South 700 East", datetime.timedelta(hours=8)),
-        Truck(None, [21, 27, 12, 35, 18, 24, 39, 6, 26, 17, 23, 38, 22, 19, 3, 36], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20)),
-        Truck(None, [9, 28, 33, 7, 32, 4, 6, 10, 2, 25, 11, 5, 8], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
+        Truck(1, None, [30, 13, 37, 16, 40, 1, 15, 34, 20, 31, 29, 14, 19], 0.0, "4001 South 700 East", datetime.timedelta(hours=8)),
+        Truck(2, None, [21, 27, 9, 35, 18, 24, 39, 6, 26, 17, 23, 38, 22, 3, 36], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20)),
+        Truck(3, None, [12, 28, 33, 7, 32, 4, 6, 10, 2, 25, 11, 5, 8], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
     ]
     
     #Deliver packages for each truck
