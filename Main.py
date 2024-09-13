@@ -33,7 +33,7 @@ def load_package(filename, hash_table):
 
 #Main function for delivering packages using nearest neighbor
 def deliver_packages(truck, hash_table, addresses, distances, time):
-
+    truck.mileage = 0.0
     time_check = parse_time('10:20 am')
 
     if time >= time_check:
