@@ -32,12 +32,15 @@ def load_package(filename, hash_table):
             hash_table.insert(ID, Package(ID, Address, City, State, Zip, Deadline, Weight, Status))
 
 #Main function for delivering packages using nearest neighbor
-def deliver_packages(truck, hash_table, addresses, distances):
+def deliver_packages(truck, hash_table, addresses, distances, time):
 
-    if truck.number == 3:
-        package_9 = hash_table.lookup(9)
-        package_9.address = '410 S State St'
-        package_9.zip = '84111'
+    time_check = parse_time('10:20 am')
+
+    if time >= time_check:
+        if truck.number == 3:
+            package_9 = hash_table.lookup(9)
+            package_9.address = '410 S State St'
+            package_9.zip = '84111'
 
     #Retrieve package objects from truck package ids
     not_delivered = [hash_table.lookup(pID) for pID in truck.packages]
@@ -94,13 +97,7 @@ def main():
         Truck(3, None, [12, 28, 33, 7, 32, 4, 6, 10, 2, 25, 11, 5, 8], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
     ]
     
-    #Deliver packages for each truck
-    for truck in trucks:
-        deliver_packages(truck, hash_table, address, distance)
-    
-    total_mileage = sum(truck.mileage for truck in trucks)
     print("WGUPS")
-    print(f"The total mileage is: {total_mileage:.2f}")
 
     time_input = ''
     while time_input != 'quit':
@@ -115,6 +112,10 @@ def main():
         while time is None:
             time_input = input('Invalid time, try again. What time do you want to check package status? Format: HH:MM AM/PM ')
             time = parse_time(time_input)
+
+        #Deliver packages for each truck
+        for truck in trucks:
+            deliver_packages(truck, hash_table, address, distance, time)
 
         time_input = input("To view a singular package type '1'. To view all packages type '2': ")
         if time_input == "1":
@@ -133,6 +134,9 @@ def main():
                     print(package)
                 else:
                     print(f"Package ID {package_id} not found.")
+
+        total_mileage = sum(truck.mileage for truck in trucks)
+        print(f"The total mileage is: {total_mileage:.2f}")
 
 if __name__ == "__main__":
     main()
